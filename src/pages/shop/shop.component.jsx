@@ -1,7 +1,9 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 
-import CollectionsOverview from '../../components/collections-overview/collections-overview.component';
+// to keep the name "CollectionsOverview" we can import default which refers to our "CollectionsOverviewContainer"
+// we could also just import it as "CollectionsOverview" but this way is more explicit as to what's going on
+import { default as CollectionsOverview } from '../../components/collections-overview/collections-overview.container';
 import CollectionPage from '../collection/collection.component';
 
 const ShopPage = ({ match }) => (
