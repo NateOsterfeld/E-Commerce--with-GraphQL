@@ -19,7 +19,7 @@ const cache = new InMemoryCache() // instance of a class that is sort of like a 
 
 const client = new ApolloClient({ // also used as an instance of a class that is our actual client with the config properties we give it
 	link: httpLink,
-	cache: cache,
+	cache,
 })
 
 //query or mutation

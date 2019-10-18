@@ -20,11 +20,10 @@ const GET_COLLECTIONS = gql`
 `
 
 const CollectionsOverviewContainer = () => (
-    /* returns function with properties: loading, error, data */
+    /* returns function with many useful properties but we only need 'loading' and 'data' for now */
     <Query query={GET_COLLECTIONS}> 
         {
-            ({ loading, error, data }) => {
-                if (error) console.log('error getting collections', error)
+            ({ loading, data }) => {
                 if (loading) return <Spinner />
                 return <CollectionsOverview collections={data.collections} /> // will always be "data.something" (in this case "data.collections")
             }

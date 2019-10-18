@@ -1,10 +1,9 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 
-// to keep the name "CollectionsOverview" we can import default which refers to our "CollectionsOverviewContainer"
-// we could also just import it as "CollectionsOverview" but this way is more explicit as to what's going on
+// default represents the default export from our containers which return either the Spinner component or original component with data now passed in
 import { default as CollectionsOverview } from '../../components/collections-overview/collections-overview.container';
-import CollectionPage from '../collection/collection.component';
+import { default as CollectionPage } from '../collection/collection.container';
 
 const ShopPage = ({ match }) => (
   <div className='shop-page'>
