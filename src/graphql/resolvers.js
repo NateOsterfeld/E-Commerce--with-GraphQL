@@ -1,10 +1,15 @@
 import { gql } from 'apollo-boost'
+import { _addItemToCart } from './cart.utils'
 
-// defines type (Query or Mutation) and the schema of the request (ToggleCartHidden would be the __typename)
-// NOTE: Setting the client-side schema is can be used for introspection in Apollo Client Devtools (where you can explore your schema in GraphiQL)
+// typeDefs let us add to our graphQL server schema - also the Mutation/Query types are exactly the same as any other object type
 export const typeDefs = gql`
+	extend type Item {
+		quantity: Int
+	}
+
 	extend type Mutation {
 		ToggleCartHidden: Boolean!
+		AddItemToCart(item: Item!): [Item]!
 	}
 `
 
@@ -15,22 +20,43 @@ const GET_CART_HIDDEN = gql`
 	}
 `
 
+const GET_CART_ITEMS = gql`
+	{
+		cartItems @client
+	}
+`
+
 
 export const resolvers = {
 	Mutation: {
-		// used in cart-icon.container - retrieves 'cartHidden' from client cache -> write to cache inverted/toggled value
+		// retrieves 'cartHidden' from client cache using 'GET_CART_HIDDEN' query -> writes to cache inverted/toggled value
 		toggleCartHidden: (_root, _args, { cache }, _info) => {
             const { cartHidden } = cache.readQuery({
                 query: GET_CART_HIDDEN,
-            })
-
+			})
+			
             cache.writeQuery({
                 query: GET_CART_HIDDEN,
                 data: { cartHidden: !cartHidden }  // similar to setState syntax where we are just changing the key value of the state/data object property
             })
 
-			// still need to use '!' here because the value hasn't actually changed (only for the 'cartHidden' inside our cache on the 'data' object)
             return !cartHidden
 		},
+
+		// destructuring off the item object we passed in from 'collection-item' to the object that variables naturally takes
+		addItemToCart: (_root, { item }, { cache }, _info) => {
+			const { cartItems } = cache.readQuery({
+				query: GET_CART_ITEMS
+			})
+
+			const newCartItems = _addItemToCart(cartItems, item)
+
+			cache.writeQuery({
+				query: GET_CART_ITEMS,
+				data: { cartItems: newCartItems }
+			})
+
+			return newCartItems
+		}
 	},
 }
