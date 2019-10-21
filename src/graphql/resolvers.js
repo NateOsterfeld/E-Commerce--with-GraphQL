@@ -23,6 +23,7 @@ const GET_CART_HIDDEN = gql`
 const GET_CART_ITEMS = gql`
 	{
 		cartItems @client
+		itemCount @client
 	}
 `
 
@@ -45,7 +46,7 @@ export const resolvers = {
 
 		// destructuring off the item object we passed in from 'collection-item' to the object that variables naturally takes
 		addItemToCart: (_root, { item }, { cache }, _info) => {
-			const { cartItems } = cache.readQuery({
+			const { cartItems, itemCount } = cache.readQuery({
 				query: GET_CART_ITEMS
 			})
 
@@ -53,7 +54,10 @@ export const resolvers = {
 
 			cache.writeQuery({
 				query: GET_CART_ITEMS,
-				data: { cartItems: newCartItems }
+				data: { 
+					cartItems: newCartItems,
+					itemCount: itemCount + 1
+				 }
 			})
 
 			return newCartItems
