@@ -1,10 +1,7 @@
 import React from 'react'
-
 import { gql } from 'apollo-boost'
 import { useMutation, useQuery } from '@apollo/react-hooks'
-
 import { ReactComponent as ShoppingIcon } from '../../assets/shopping-bag.svg'
-
 import './cart-icon.styles.scss'
 
 

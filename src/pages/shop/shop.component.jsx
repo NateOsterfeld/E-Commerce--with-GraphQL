@@ -1,7 +1,5 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-
-// default represents the default export from our containers which return either the Spinner component or original component with data now passed in
 import { default as CollectionsOverview } from '../../components/collections-overview/collections-overview.container';
 import { default as CollectionPage } from '../collection/collection.container';
 

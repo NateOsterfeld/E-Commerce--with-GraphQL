@@ -1,10 +1,7 @@
 import React from 'react';
-
 import CustomButton from '../custom-button/custom-button.component';
-
 import { gql } from 'apollo-boost'
 import { useMutation } from '@apollo/react-hooks'
-
 import './collection-item.styles.scss';
 
 const ADD_ITEM_TO_CART = gql`

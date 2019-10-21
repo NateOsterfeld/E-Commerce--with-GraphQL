@@ -1,13 +1,9 @@
 import React from 'react';
-
 import { withRouter } from 'react-router-dom';
-
 import CustomButton from '../custom-button/custom-button.component';
 import CartItem from '../cart-item/cart-item.component';
-
 import { gql } from 'apollo-boost'
 import { useQuery, useMutation } from '@apollo/react-hooks'
-
 import './cart-dropdown.styles.scss';
 
 const GET_CART_ITEMS = gql`
